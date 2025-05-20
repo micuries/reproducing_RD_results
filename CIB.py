@@ -177,7 +177,7 @@ def _run_cib_for_beta(beta, p_sigma_plus, p_sigma_minus, p_sigma_minus_given_plu
                         # If sum is zero, continue with original (unnormalized) values
                         pt_sigma_minus_given_r_norm = pt_sigma_minus_given_r[r, :]
                     
-                    kl_values[r] = np.sum(improved_kl_divergence(p_sigma_minus_given_plus_norm, pt_sigma_minus_given_r_norm)) / np.log(2)
+                    kl_values[r] = improved_kl_divergence(p_sigma_minus_given_plus_norm, pt_sigma_minus_given_r_norm)
                 
                 # Calculate unnormalized log probabilities
                 # Replace zero values with a small epsilon to avoid log(0)
@@ -331,6 +331,7 @@ def conditional_probability_minus_given_plus(joint_prob, p_sigma_plus):
     numpy.ndarray: Conditional probability matrix p(σ-|σ+)
     """
     M = len(p_sigma_plus) - 1
+    print("M in conditional_probability_minus_given_plus", M)
     p_sigma_minus_given_plus = np.zeros((M+1, M+1))
     
     for sigma_plus in range(M+1):
